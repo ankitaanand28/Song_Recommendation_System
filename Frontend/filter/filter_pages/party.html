@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <title>Song List</title>
+    
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body bgcolor="black">
+    
+<h1><font color="white">Song List</font></h1>
+
+<!-- Assuming you have a div with an id where you want to display the song list -->
+<div id="songList"></div>
+
+<script>
+    // Sample data
+    var songData = [
+        { track_uri: "0dRhSF9LV0HR8Jwd3MMMKJ", artist_uri: "26dSoYclwsYLMAKD3tpOr4", album_uri: "0z7pVBGOD7HCIB7S8eLkLI" },
+        { track_uri: "7cC1wC4UcN66T9ve8KXqwi", artist_uri: "5YGY8feqx7naU7z4HrwZM6", album_uri: "6cfcdjtSR9ARnpnpwtEGaS" },
+        // Add more data as needed
+    ];
+
+    // Function to generate Spotify embed links
+    function generateSpotifyEmbedLink(songUri) {
+        return 'https://open.spotify.com/embed/track/' + songUri;
+    }
+
+    // Function to display songs based on track_uri
+    function displaySongs(trackUri) {
+        var songListDiv = document.getElementById("songList");
+        var filteredSongs = songData.filter(function(song) {
+            return song.track_uri === trackUri;
+        });
+
+        if (filteredSongs.length > 0) {
+            var ul = document.createElement("ul");
+            filteredSongs.forEach(function(song) {
+                var li = document.createElement("li");
+                var spotifyEmbedLink = generateSpotifyEmbedLink(song.track_uri);
+                // Create an iframe for the Spotify embed link
+                li.innerHTML = `<iframe src="${spotifyEmbedLink}" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`;
+                ul.appendChild(li);
+            });
+            songListDiv.appendChild(ul);
+        } else {
+            songListDiv.textContent = "No songs found for the given track URI.";
+        }
+    }
+
+    var trackUrisToDisplay = [
+    "7cC1wC4UcN66T9ve8KXqwi",
+    "0dRhSF9LV0HR8Jwd3MMMKJ",
+    "5T6bJp3XgwT0IaCfKMxmAu",
+    // Add more track URIs as needed
+];
+
+// Loop through each track URI and call the displaySongs function
+for (var i = 0; i < trackUrisToDisplay.length; i++) {
+    displaySongs(trackUrisToDisplay[i]);
+}
+</script>
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1EIdzRg9sDFEY3?utm_source=generator&theme=0" width="100%" height="800" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+</body>
+</html>
+
